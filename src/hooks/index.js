@@ -7,12 +7,18 @@ export const useField = (type) => {
     setValue(event.target.value);
   };
 
+  const reset = () => {
+    if (type === "text" || type === "date") {
+      setValue("");
+    } else if (type === "number") {
+      setValue(0);
+    }
+  };
+
   return {
     type,
     value,
     onChange,
+    reset,
   };
 };
-
-// modules can have several named exports
-// export const useAnotherHook = () => {};

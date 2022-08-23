@@ -118,25 +118,38 @@ const CreateNew = (props) => {
     });
     navigate("/");
   };
+  const handleReset = () => {
+    content.reset();
+    author.reset();
+    info.reset();
+  };
 
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
         <div>
           content
-          <input {...content} />
+          <input
+            value={content.value}
+            type={content.type}
+            onChange={content.onChange}
+          />
         </div>
         <div>
           author
-          <input {...author} />
+          <input
+            value={author.value}
+            type={author.type}
+            onChange={author.onChange}
+          />
         </div>
         <div>
           url for more info
-          <input {...info} />
+          <input value={info.value} type={info.type} onChange={info.onChange} />
         </div>
         <input type="submit" value="create" />
-        <button>create</button>
+        <input type="reset" value="reset" />
       </form>
     </div>
   );
@@ -160,11 +173,15 @@ const App = () => {
     },
   ]);
 
-  // const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState("");
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000);
     setAnecdotes(anecdotes.concat(anecdote));
+    setNotification(`The new anecdote "${anecdote.content}" has been created!`);
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
   };
 
   // const anecdoteById = (id) => anecdotes.find((a) => a.id === id);
@@ -185,6 +202,7 @@ const App = () => {
       <div>
         <Menu />
         <h1>Software anecdotes</h1>
+        <div>{notification}</div>
         <Routes>
           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
           <Route
