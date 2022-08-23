@@ -135,6 +135,7 @@ const CreateNew = (props) => {
           url for more info
           <input {...info} />
         </div>
+        <input type="submit" value="create" />
         <button>create</button>
       </form>
     </div>
